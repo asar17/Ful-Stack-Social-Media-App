@@ -8,6 +8,7 @@ import Spinner from './Spinner';
 
 const Feed = () => {
   const [pins, setPins] = useState();
+  const [pinsEmpty,setPinsEmpty]=useState('');
   const [loading, setLoading] = useState(false);
   const { categoryId } = useParams();
 
@@ -15,11 +16,21 @@ const Feed = () => {
     if (categoryId) {
       setLoading(true);
       const query = searchQuery(categoryId);
-      client.fetch(query).then((data) => {
-        setPins(data);
-        setLoading(false);
-      });
-    } else {
+        client.fetch(query).then((data) => {
+          console.log(data)
+          if(data.length>0){
+            setPins(data);
+            setLoading(false);
+          }
+          else{
+            setPins(data);
+            setLoading(false);
+            setPinsEmpty('There is no Photos in this Catagory')
+          }
+          
+        });
+       } 
+    else {
       setLoading(true);
 
       client.fetch(feedQuery).then((data) => {
@@ -36,9 +47,11 @@ const Feed = () => {
   }
   return (
     <div>
-      {pins && (
-        <MasonryLayout pins={pins} />
-      )}
+      
+        {
+          pins?.length>0?(<MasonryLayout pins={pins} />):(<div className="flex flex-row justify-center mt-40 italic md:text-3xl text-red-500">{pinsEmpty}</div>)
+         }
+      
     </div>
   );
 };

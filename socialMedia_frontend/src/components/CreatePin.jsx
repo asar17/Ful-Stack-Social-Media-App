@@ -26,7 +26,7 @@ const CreatePin = ({ user }) => {
       setWrongImageType(false);
       setLoading(true);
       client.assets
-        .upload('image', selectedFile, { contentType: selectedFile.type, filename: selectedFile.name })
+        .upload('image', selectedFile, { contentType: selectedFile?.type, filename: selectedFile?.name })
         .then((document) => {
           setImageAsset(document);
           setLoading(false);
@@ -54,10 +54,10 @@ const CreatePin = ({ user }) => {
             _ref: imageAsset?._id,
           },
         },
-        userId: user._id,
+        userId: user?._id,
         postedBy: {
           _type: 'postedBy',
-          _ref: user._id,
+          _ref: user?._id,
         },
         category,
       };
@@ -142,11 +142,11 @@ const CreatePin = ({ user }) => {
           {user && (
             <div className="flex gap-2 mt-2 mb-2 items-center bg-white rounded-lg ">
               <img
-                src={user.image}
+                src={user?.image}
                 className="w-10 h-10 rounded-full"
                 alt="user-profile"
               />
-              <p className="font-bold">{user.userName}</p>
+              <p className="font-bold">{user?.userName}</p>
             </div>
           )}
           <input
@@ -175,8 +175,8 @@ const CreatePin = ({ user }) => {
               >
                 <option value="others" className="sm:text-bg bg-white">Select Category</option>
                 {categories.map((item) => (
-                  <option className="text-base border-0 outline-none capitalize bg-white text-black " value={item.name}>
-                    {item.name}
+                  <option className="text-base border-0 outline-none capitalize bg-white text-black " value={item?.name}>
+                    {item?.name}
                   </option>
                 ))}
               </select>
